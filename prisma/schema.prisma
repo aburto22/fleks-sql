@@ -1,0 +1,104 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Plans {
+  id                Int                 @id @default(autoincrement())
+  name              String?             @db.VarChar(255)
+  alias             String?             @db.VarChar(255)
+  description       String?
+  price             Int?
+  type              enum_Plans_type?
+  createdAt         DateTime            @default(now()) @db.Timestamptz(6)
+  updatedAt         DateTime            @default(now()) @db.Timestamptz(6)
+  deletedAt         DateTime?           @db.Timestamptz(6)
+  sortOrder         Int?
+  maxDistance       Int?                @default(-1)
+  archivedAt        DateTime?           @db.Timestamptz(6)
+  market            enum_Plans_market   @default(private)
+  SubscriptionPlans SubscriptionPlans[]
+}
+
+model SubscriptionPeriods {
+  id             Int           @id @default(autoincrement())
+  periodFrom     DateTime      @db.Timestamptz(6)
+  periodTo       DateTime      @db.Timestamptz(6)
+  distance       Int?
+  fuel           Int?
+  paid           Boolean?
+  subscriptionId Int
+  createdAt      DateTime      @default(now()) @db.Timestamptz(6)
+  updatedAt      DateTime      @default(now()) @db.Timestamptz(6)
+  deletedAt      DateTime?     @db.Timestamptz(6)
+  lastSynced     DateTime?     @default(now()) @db.Timestamptz(6)
+  paidUsage      Boolean?      @default(false)
+  Subscriptions  Subscriptions @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@index([subscriptionId], map: "subscription_periods_subscription_id")
+}
+
+model SubscriptionPlans {
+  id             Int           @id @default(autoincrement())
+  subscriptionId Int
+  planId         Int
+  createdAt      DateTime      @default(now()) @db.Timestamptz(6)
+  updatedAt      DateTime      @default(now()) @db.Timestamptz(6)
+  deletedAt      DateTime?     @db.Timestamptz(6)
+  startedAt      DateTime      @db.Timestamptz(6)
+  endedAt        DateTime?     @db.Timestamptz(6)
+  Plans          Plans         @relation(fields: [planId], references: [id], onDelete: Cascade)
+  Subscriptions  Subscriptions @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@index([planId], map: "subscription_plans_plan_id")
+  @@index([subscriptionId], map: "subscription_plans_subscription_id")
+}
+
+model SubscriptionVehicles {
+  id             Int           @id @default(autoincrement())
+  subscriptionId Int
+  vehicleId      Int
+  startedAt      DateTime      @db.Timestamptz(6)
+  endedAt        DateTime?     @db.Timestamptz(6)
+  createdAt      DateTime      @default(now()) @db.Timestamptz(6)
+  updatedAt      DateTime      @default(now()) @db.Timestamptz(6)
+  deletedAt      DateTime?     @db.Timestamptz(6)
+  Subscriptions  Subscriptions @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@index([endedAt], map: "subscription_vehicles_ended_at")
+  @@index([startedAt], map: "subscription_vehicles_started_at")
+  @@index([subscriptionId], map: "subscription_vehicles_subscription_id")
+  @@index([vehicleId], map: "subscription_vehicles_vehicle_id")
+}
+
+model Subscriptions {
+  id                   Int                    @id @default(autoincrement())
+  userId               Int
+  createdAt            DateTime               @default(now()) @db.Timestamptz(6)
+  updatedAt            DateTime               @default(now()) @db.Timestamptz(6)
+  deletedAt            DateTime?              @db.Timestamptz(6)
+  cancellationDate     DateTime?              @db.Timestamptz(6)
+  SubscriptionPeriods  SubscriptionPeriods[]
+  SubscriptionPlans    SubscriptionPlans[]
+  SubscriptionVehicles SubscriptionVehicles[]
+}
+
+enum enum_Plans_lockBehaviour {
+  none
+  locked
+  upgrade
+}
+
+enum enum_Plans_market {
+  private
+  business
+}
+
+enum enum_Plans_type {
+  recurring
+  metered
+}
