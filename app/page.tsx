@@ -1,4 +1,6 @@
-export default function Home() {
+import Container from "./Container";
+
+export default async function Home() {
   return (
     <div className="text-fleks-dark">
       <header>
@@ -6,6 +8,7 @@ export default function Home() {
           Subscription Periods Cost Summary
         </h1>
       </header>
+      <Container />
     </div>
   );
 }

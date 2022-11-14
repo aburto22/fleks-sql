@@ -10,6 +10,9 @@ module.exports = {
       colors: {
         "fleks-dark": "#29194a",
       },
+      spacing: {
+        112: "28rem",
+      },
     },
   },
   plugins: [],
