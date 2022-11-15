@@ -6,6 +6,7 @@ import data from "../data/query";
 import { TApiResponse } from "../types";
 import Query from "./Query";
 import Result from "./Result";
+import Warning from "./Warning";
 
 export default function Container() {
   const [query, setQuery] = useState(data.query);
@@ -43,6 +44,7 @@ export default function Container() {
       <Query query={query} setQuery={setQuery} />
       <p className="text-lg text-center text-red-500">{error}</p>
       <Result result={result} />
+      <Warning />
     </main>
   );
 }

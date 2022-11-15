@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       colors: {
         "fleks-dark": "#29194a",
+        "fleks-light": "##ff4a7e",
       },
       spacing: {
         112: "28rem",
