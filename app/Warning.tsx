@@ -1,6 +1,6 @@
 export default function Warning() {
   return (
-    <div className="fixed p-4 text-white rounded-full shadow-xl group top-24 right-8 bg-fleks-dark">
+    <div className="fixed p-4 text-white rounded-full shadow-xl group top-24 right-8 bg-fleks-light">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
