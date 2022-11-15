@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { parse } from "superjson";
-import data from "../data/query";
-import { TApiResponse } from "../types";
+import { query as sqlQuery } from "../data/query";
+import { TApiResponse, TQuery } from "../types";
 import Query from "./Query";
 import Result from "./Result";
 import Warning from "./Warning";
 
 export default function Container() {
-  const [query, setQuery] = useState(data.query);
-  const [result, setResult] = useState<Array<Record<string, string>>>();
+  const [query, setQuery] = useState(sqlQuery);
+  const [result, setResult] = useState<TQuery>();
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -40,10 +40,10 @@ export default function Container() {
   }, [query]);
 
   return (
-    <main className="max-w-screen-lg p-4 pb-8 mx-auto">
+    <main className="p-4 mx-auto pb-28 sm:px-8 max-w-screen-2xl">
       <Query query={query} setQuery={setQuery} />
-      <p className="text-lg text-center text-red-500">{error}</p>
-      <Result result={result} />
+      {error && <p className="text-lg text-center text-red-500">{error}</p>}
+      {result && <Result result={result} />}
       <Warning />
     </main>
   );

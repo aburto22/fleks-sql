@@ -1,5 +1,4 @@
-const data = {
-  query: `WITH active_plans AS (
+export const query = `WITH active_plans AS (
   SELECT id AS "subscriptionPlanId", "subscriptionId", "planId", "startedAt", "endedAt" FROM "SubscriptionPlans"
   WHERE ("endedAt" >= DATE '2022-07-01' OR "endedAt" IS NULL)
   AND "startedAt" <= DATE '2022-06-01'
@@ -14,7 +13,4 @@ const data = {
 
 SELECT "subscriptionPeriodId", "subscriptionId", SUM(price) as total, STRING_AGG("planId"::TEXT, ',') as plans
 FROM periods_with_price 
-GROUP BY "subscriptionPeriodId", "subscriptionId";`,
-};
-
-export default data;
+GROUP BY "subscriptionPeriodId", "subscriptionId";`;

@@ -18,7 +18,7 @@ export default function Query({ query, setQuery }: QueryProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="flex flex-col items-center gap-2 mb-6"
+      className="flex flex-col items-center max-w-screen-lg gap-2 mx-auto mb-6"
     >
       <textarea
         className="w-full p-4 rounded-lg shadow-lg resize-none bg-gray-50 h-112"
