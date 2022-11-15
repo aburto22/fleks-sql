@@ -6,6 +6,7 @@ import { query as sqlQuery } from "../data/query";
 import { TApiResponse, TQuery } from "../types";
 import Query from "./Query";
 import Result from "./Result";
+import Schema from "./Schema";
 import Warning from "./Warning";
 
 export default function Container() {
@@ -41,6 +42,7 @@ export default function Container() {
 
   return (
     <main className="p-4 mx-auto pb-28 sm:px-8 max-w-screen-2xl">
+      <Schema />
       <Query query={query} setQuery={setQuery} />
       {error && <p className="text-lg text-center text-red-500">{error}</p>}
       {result && <Result result={result} />}

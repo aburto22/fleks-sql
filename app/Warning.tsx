@@ -16,8 +16,9 @@ export default function Warning() {
         />
       </svg>
       <p className="absolute right-0 hidden p-3 -translate-y-full rounded-lg shadow-lg -top-4 group-hover:block w-72 bg-gray-50 text-fleks-dark">
-        Never, ever, do something like this on a production site (or any site),
-        as this left the door open for SQL Injection Attacks.
+        <span className="font-bold">Never, ever</span>, do something like this
+        on a production site (or any site), as this left the door open for SQL
+        Injection Attacks.
       </p>
     </div>
   );
