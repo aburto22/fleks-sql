@@ -22,8 +22,6 @@ export default async function handler(
 
       return res.status(200).send(stringify({ status: "success", data }));
     } catch (err) {
-      console.log(err);
-
       const message =
         err instanceof PrismaClientKnownRequestError
           ? err.meta?.message || err.message
