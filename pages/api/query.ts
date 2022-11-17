@@ -3,7 +3,8 @@ import prisma from "../../lib/prisma";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { stringify } from "superjson";
 
-const regexForbiddenActions = /(?:\b|;)(?:insert|alter|delete|update)\b/gim;
+const regexForbiddenActions =
+  /(?:\b|;)(?:insert|alter|delete|update|create|drop)\b/gim;
 
 export default async function handler(
   req: NextApiRequest,
