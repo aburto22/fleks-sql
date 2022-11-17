@@ -4,7 +4,7 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime";
 import { stringify } from "superjson";
 
 const regexForbiddenActions =
-  /(?:\b|;)(?:insert|alter|delete|update|create|drop)\b/gim;
+  /(?:\b|;|\s)(?:insert|alter|delete|update|create|drop)(?:\s|\b)/gim;
 
 export default async function handler(
   req: NextApiRequest,
@@ -22,6 +22,8 @@ export default async function handler(
 
       return res.status(200).send(stringify({ status: "success", data }));
     } catch (err) {
+      console.log(err);
+
       const message =
         err instanceof PrismaClientKnownRequestError
           ? err.meta?.message || err.message
